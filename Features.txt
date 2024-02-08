@@ -1,0 +1,7 @@
+User can edit the task/todo
+Add indicator in active buttons (count of todo)
+Add a copy for createdAt and updatedAt below the todo item
+Add a danger and success variant for button
+Update the action instead ... for edit and delete
+Add a modal
+Add indicator (down caret icon) at the bottom if overflow example 3 more...

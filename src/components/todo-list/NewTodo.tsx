@@ -1,25 +1,17 @@
 import { useRef, useState } from 'react'
 import styled from 'styled-components'
 
-import { Button } from '../Button'
-import Form, { type FormHandle } from '../Form'
+import { Button } from '../UI/Button'
+import Form, { type FormHandle } from '../UI/Form'
 
 import { useTodoDispatch } from '../../context/TodoContext'
 import { ETodoActionKind } from '../../reducer/todo'
+import { Input } from '../UI/Input'
+import { FormControl } from '../UI/FormControl'
 
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-`
-
-const Input = styled.input<{ $isError?: boolean }>`
-  padding: 0.5rem 1rem;
-  border: 1.5px solid ${(props) => (props.$isError ? 'red' : '#ccc')};
-  border-radius: 4px;
-
-  &:focus {
-    border: 1.5px solid ${(props) => (props.$isError ? 'red' : '#ccc')};
-  }
 `
 
 const ErrorText = styled.p`
@@ -27,15 +19,7 @@ const ErrorText = styled.p`
   font-size: 0.875rem;
 `
 
-const FormControl = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin-right: 30px;
-  gap: 5px;
-`
-
-const AddNewTodo = () => {
+const NewTodo = () => {
   const dispatch = useTodoDispatch()
   const form = useRef<FormHandle>(null)
   const input = useRef<HTMLInputElement>(null)
@@ -73,4 +57,4 @@ const AddNewTodo = () => {
   )
 }
 
-export default AddNewTodo
+export default NewTodo

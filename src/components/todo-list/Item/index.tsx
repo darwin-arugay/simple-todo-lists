@@ -91,7 +91,7 @@ const TodoItem = React.memo(({ id, completed, title }: TodoItemProps) => {
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
-    setIsEditing(true)
+    setIsEditing((prev) => !prev)
   }
 
   return (
@@ -112,18 +112,26 @@ const TodoItem = React.memo(({ id, completed, title }: TodoItemProps) => {
           )}
         </StyledTodoItemContainer>
         <ActionContainer>
-          {isEditing ? (
-            <Button $variant='outlined' disabled={completed} type='submit'>
-              Save
-            </Button>
+          {!completed ? (
+            isEditing ? (
+              <>
+                <Button $variant='primary' type='submit'>
+                  Save
+                </Button>
+                <Button $variant='outlined' type='submit' onClick={handleEdit}>
+                  Cancel
+                </Button>
+              </>
+            ) : (
+              <Button $variant='outlined' disabled={completed} onClick={handleEdit} type='button'>
+                Edit
+              </Button>
+            )
           ) : (
-            <Button $variant='outlined' disabled={completed} onClick={handleEdit} type='button'>
-              Edit
+            <Button onClick={deleteTodo} type='button'>
+              Delete
             </Button>
           )}
-          <Button disabled={completed} onClick={deleteTodo} type='button'>
-            Delete
-          </Button>
         </ActionContainer>
       </StyledTodoItem>
     </Form>

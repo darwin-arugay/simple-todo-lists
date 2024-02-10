@@ -1,7 +1,7 @@
 import { type ReactNode, type ComponentPropsWithoutRef } from 'react'
 import { Button } from '../Button'
 import styled from 'styled-components'
-import { TabsProvider, useTabsContext } from '../../context/TabsContext'
+import { TabsProvider, useTabsContext } from '../../../context/TabsContext'
 
 const StyledList = styled.ul`
   display: flex;

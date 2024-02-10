@@ -1,16 +1,14 @@
-import React from 'react'
 import List from '../List'
-import Tabs, { Tab } from '../../Tabs'
+import Tabs from '../../Tabs'
 import { Button } from '../../Button'
 import AddNewTodo from '../AddNewTodo'
 
 import { ActionContainer, Divider } from './styles'
-import { useTodoDispatch, useTodos } from '../../../context/TodoContext'
+import { useTodoDispatch } from '../../../context/TodoContext'
 import { FilterType, ETodoActionKind } from '../../../reducer/todo'
 
 const Todo = () => {
   const dispatch = useTodoDispatch()
-  const { filterType } = useTodos()
 
   const filterTodo = (filter: FilterType) => {
     dispatch({
@@ -28,18 +26,21 @@ const Todo = () => {
       filterTodo() {
         filterTodo(FilterType.ALL)
       },
+      id: FilterType.ALL,
     },
     {
       label: 'Pending',
       filterTodo() {
         filterTodo(FilterType.PENDING)
       },
+      id: FilterType.PENDING,
     },
     {
       label: 'Completed',
       filterTodo() {
         filterTodo(FilterType.COMPLETED)
       },
+      id: FilterType.COMPLETED,
     },
   ]
 
@@ -48,18 +49,13 @@ const Todo = () => {
       <AddNewTodo />
       <Divider $my={1.2} />
       <ActionContainer>
-        <Tabs>
+        <Tabs initialActive='all'>
           {actions.map((action) => {
-            const { label, filterTodo } = action
-
+            const { label, filterTodo, id } = action
             return (
-              <Tab
-                key={label}
-                handleClick={filterTodo}
-                active={filterType === label.toLocaleLowerCase()}
-              >
+              <Tabs.Tab key={label} id={id} onClick={filterTodo}>
                 {label}
-              </Tab>
+              </Tabs.Tab>
             )
           })}
         </Tabs>

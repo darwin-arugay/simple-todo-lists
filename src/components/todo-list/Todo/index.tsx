@@ -4,6 +4,8 @@ import Tabs from '../../UI/Tabs'
 import { Button } from '../../UI/Button'
 import NewTodo from '../NewTodo'
 import { EmptyTaskMessage } from '../EmptyTaskMessage'
+import { Card } from '../../UI/Card'
+import Header from '../../Header'
 
 import { ActionContainer, Divider } from './styles'
 import { useTodoDispatch, useTodos } from '../../../context/TodoContext'
@@ -50,7 +52,8 @@ const Todo = () => {
   ]
 
   return (
-    <section className='todo-container'>
+    <Card>
+      <Header />
       <NewTodo />
       <Divider $my={1.2} />
       <ActionContainer>
@@ -68,7 +71,7 @@ const Todo = () => {
       </ActionContainer>
       <Divider $my={1.2} />
       <>{filteredTodos.length ? <List todos={filteredTodos} /> : <EmptyTaskMessage />}</>
-    </section>
+    </Card>
   )
 }
 

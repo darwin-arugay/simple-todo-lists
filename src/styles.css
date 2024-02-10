@@ -1,6 +1,7 @@
+@import '~modern-normalize/modern-normalize.css';
+
 * {
-  box-sizing: border-box;
-  margin: 0;
+  font-size: 14px;
   font-family: Poppins, sans-serif;
 }
 
@@ -30,45 +31,25 @@
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 body {
   background-color: #0c99df;
+  min-height: 100vh;
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-
-/* TODO: Move in the component */
 
 main {
-  margin: auto;
-  width: 30rem;
-  /* margin-top: 20vh; */
-  height: 50vh;
+  max-width: fit-content;
+  height: fit-content;
 }
 
-main header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 1.5rem;
-  padding: 1.5rem 1rem;
-}
-
-main header h2 {
-  font-size: 2.5rem;
-  font-weight: 500;
-  text-transform: uppercase;
-  color: #fff;
-  width: fit-content;
-}
-
-main header p {
-  font-size: 1rem;
-  margin: 0;
-}
-.todo-container {
-  padding: 1.5rem;
-  background-color: #fff;
-  border-radius: 4px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  width: 100%;
+@media (max-width: 600px) {
+  * {
+    font-size: 12px;
+  }
 }

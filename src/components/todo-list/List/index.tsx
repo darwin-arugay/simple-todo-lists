@@ -5,7 +5,7 @@ import { ITodo } from '../../../shared/interfaces'
 import { TodoItem } from '../Item'
 
 const ListContainer = styled.ul`
-  min-height: 40vh;
+  max-height: 350px;
   overflow-y: auto;
 `
 

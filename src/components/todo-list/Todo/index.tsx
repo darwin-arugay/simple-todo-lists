@@ -1,14 +1,20 @@
+import { useMemo } from 'react'
 import List from '../List'
-import Tabs from '../../Tabs'
-import { Button } from '../../Button'
-import AddNewTodo from '../AddNewTodo'
+import Tabs from '../../UI/Tabs'
+import { Button } from '../../UI/Button'
+import NewTodo from '../NewTodo'
+import { EmptyTaskMessage } from '../EmptyTaskMessage'
 
 import { ActionContainer, Divider } from './styles'
-import { useTodoDispatch } from '../../../context/TodoContext'
+import { useTodoDispatch, useTodos } from '../../../context/TodoContext'
 import { FilterType, ETodoActionKind } from '../../../reducer/todo'
+import { getFilteredTodo } from '../../../utils/getFilteredTodos'
 
 const Todo = () => {
   const dispatch = useTodoDispatch()
+  const { todos, filterType } = useTodos()
+
+  const filteredTodos = useMemo(() => getFilteredTodo(todos, filterType), [todos, filterType])
 
   const filterTodo = (filter: FilterType) => {
     dispatch({
@@ -18,7 +24,6 @@ const Todo = () => {
       },
     })
   }
-  // TODO: Add a count in the buttons (indicator)
 
   const actions = [
     {
@@ -46,7 +51,7 @@ const Todo = () => {
 
   return (
     <section className='todo-container'>
-      <AddNewTodo />
+      <NewTodo />
       <Divider $my={1.2} />
       <ActionContainer>
         <Tabs initialActive='all'>
@@ -62,7 +67,7 @@ const Todo = () => {
         <Button $variant='primary'>Clear All</Button>
       </ActionContainer>
       <Divider $my={1.2} />
-      <List />
+      <>{filteredTodos.length ? <List todos={filteredTodos} /> : <EmptyTaskMessage />}</>
     </section>
   )
 }

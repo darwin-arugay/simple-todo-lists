@@ -12,6 +12,7 @@ export enum ETodoActionKind {
   FILTER_TODO = 'FILTER_TODO',
   TOGGLE_COMPLETE = 'TOGGLE_COMPLETE',
   DELETE_TODO = 'DELETE_TODO',
+  UPDATE_TODO = 'UPDATE_TODO',
 }
 
 type ADD_TODO = {
@@ -49,8 +50,20 @@ type DELETE_TODO = {
   }
 }
 
-export type Actions = ADD_TODO | REMOVE_TODO | FILTER_TODO | TOGGLE_COMPLETE | DELETE_TODO
+type UPDATE_TODO = {
+  type: ETodoActionKind.UPDATE_TODO
+  payload: {
+    todo: ITodo
+  }
+}
 
+export type Actions =
+  | ADD_TODO
+  | REMOVE_TODO
+  | FILTER_TODO
+  | TOGGLE_COMPLETE
+  | DELETE_TODO
+  | UPDATE_TODO
 export type TodoState = {
   todos: ITodo[]
   filterType: FilterType
@@ -106,6 +119,21 @@ export const todoReducer = (state: TodoState, action: Actions) => {
       return {
         ...state,
         todos: todos.filter((todo) => todo.id !== payload.id),
+      }
+
+    case ETodoActionKind.UPDATE_TODO:
+      return {
+        ...state,
+        todos: todos.map((todo) => {
+          if (todo.id === payload.todo.id) {
+            return {
+              ...todo,
+              title: payload.todo.title,
+            }
+          }
+
+          return todo
+        }),
       }
 
     default:

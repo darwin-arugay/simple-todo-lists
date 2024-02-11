@@ -54,14 +54,26 @@ const TodoItem = React.memo(({ id, completed, title }: TodoItemProps) => {
 
   const [isEditing, setIsEditing] = useState(false)
 
-  const handleToggleTodo = (event: undefined | React.ChangeEvent<HTMLInputElement>, id: number) => {
-    event?.stopPropagation()
+  const handleToggleTodo = () => {
     dispatch({
       type: ETodoActionKind.TOGGLE_COMPLETE,
       payload: {
         id,
       },
     })
+
+    if (!completed) {
+      dispatch({
+        type: ETodoActionKind.DISPLAY_FEEDBACK,
+        payload: {
+          feedback: {
+            type: 'info',
+            text: 'Congats, you successfully accomplished another task! 👏💪',
+            show: true,
+          },
+        },
+      })
+    }
   }
 
   const deleteTodo = () => {
@@ -69,6 +81,17 @@ const TodoItem = React.memo(({ id, completed, title }: TodoItemProps) => {
       type: ETodoActionKind.DELETE_TODO,
       payload: {
         id: id,
+      },
+    })
+
+    dispatch({
+      type: ETodoActionKind.DISPLAY_FEEDBACK,
+      payload: {
+        feedback: {
+          type: 'warning',
+          text: `An item with id of ${id} has been deleted.`,
+          show: true,
+        },
       },
     })
   }
@@ -82,6 +105,17 @@ const TodoItem = React.memo(({ id, completed, title }: TodoItemProps) => {
           id,
           completed,
           title: updatedTitle,
+        },
+      },
+    })
+
+    dispatch({
+      type: ETodoActionKind.DISPLAY_FEEDBACK,
+      payload: {
+        feedback: {
+          type: 'success',
+          text: `An item with id of ${id} was successfully updated.`,
+          show: true,
         },
       },
     })
@@ -102,7 +136,7 @@ const TodoItem = React.memo(({ id, completed, title }: TodoItemProps) => {
             type='checkbox'
             checked={completed}
             disabled={isEditing}
-            onChange={(e) => handleToggleTodo(e, id)}
+            onChange={handleToggleTodo}
           />
 
           {isEditing ? (

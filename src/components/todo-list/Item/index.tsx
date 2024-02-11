@@ -98,29 +98,42 @@ const TodoItem = React.memo(({ id, completed, title }: TodoItemProps) => {
 
   const handleSave = (data: unknown) => {
     const { title: updatedTitle } = data as { title: string }
-    dispatch({
-      type: ETodoActionKind.UPDATE_TODO,
-      payload: {
-        todo: {
-          id,
-          completed,
-          title: updatedTitle,
+    if (!updatedTitle) {
+      dispatch({
+        type: ETodoActionKind.DISPLAY_FEEDBACK,
+        payload: {
+          feedback: {
+            show: true,
+            text: 'Please fill the required field.',
+            type: 'error',
+          },
         },
-      },
-    })
-
-    dispatch({
-      type: ETodoActionKind.DISPLAY_FEEDBACK,
-      payload: {
-        feedback: {
-          type: 'success',
-          text: `An item with id of ${id} was successfully updated.`,
-          show: true,
+      })
+    } else {
+      dispatch({
+        type: ETodoActionKind.UPDATE_TODO,
+        payload: {
+          todo: {
+            id,
+            completed,
+            title: updatedTitle,
+          },
         },
-      },
-    })
+      })
 
-    setIsEditing(false)
+      dispatch({
+        type: ETodoActionKind.DISPLAY_FEEDBACK,
+        payload: {
+          feedback: {
+            type: 'success',
+            text: `An item with id of ${id} was successfully updated.`,
+            show: true,
+          },
+        },
+      })
+
+      setIsEditing(false)
+    }
   }
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

@@ -3,3 +3,5 @@ export interface ITodo {
   title: string
   completed: boolean
 }
+
+export type Severity = 'info' | 'warning' | 'success' | 'error'

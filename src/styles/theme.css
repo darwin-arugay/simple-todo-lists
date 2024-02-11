@@ -1,0 +1,13 @@
+:root {
+  --color-info-bg: #b3e0ff;
+  --color-info-text: #004080;
+
+  --color-warning-bg: #fff8e1;
+  --color-warning-text: #c79100;
+
+  --color-success-bg: #d0e9c6;
+  --color-success-text: #1e4620;
+
+  --color-error-bg: #ffcdd2;
+  --color-error-text: #b71c1c;
+}

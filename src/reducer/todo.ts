@@ -1,4 +1,4 @@
-import { ITodo } from '../shared/interfaces'
+import { ITodo, Severity } from '../shared/interfaces'
 
 export enum FilterType {
   ALL = 'all',
@@ -13,6 +13,7 @@ export enum ETodoActionKind {
   TOGGLE_COMPLETE = 'TOGGLE_COMPLETE',
   DELETE_TODO = 'DELETE_TODO',
   UPDATE_TODO = 'UPDATE_TODO',
+  DISPLAY_FEEDBACK = 'DISPLAY_FEEDBACK',
 }
 
 type ADD_TODO = {
@@ -57,6 +58,19 @@ type UPDATE_TODO = {
   }
 }
 
+type DISPLAY_FEEDBACK = {
+  type: ETodoActionKind.DISPLAY_FEEDBACK
+  payload: {
+    feedback: Feedback
+  }
+}
+
+type Feedback = {
+  show: boolean
+  type: Severity
+  text: string
+} | null
+
 export type Actions =
   | ADD_TODO
   | REMOVE_TODO
@@ -64,9 +78,12 @@ export type Actions =
   | TOGGLE_COMPLETE
   | DELETE_TODO
   | UPDATE_TODO
+  | DISPLAY_FEEDBACK
+
 export type TodoState = {
   todos: ITodo[]
   filterType: FilterType
+  feedback: Feedback
 }
 
 export const todoReducer = (state: TodoState, action: Actions) => {
@@ -134,6 +151,13 @@ export const todoReducer = (state: TodoState, action: Actions) => {
 
           return todo
         }),
+      }
+
+    case ETodoActionKind.DISPLAY_FEEDBACK:
+      console.log(payload)
+      return {
+        ...state,
+        feedback: payload.feedback,
       }
 
     default:

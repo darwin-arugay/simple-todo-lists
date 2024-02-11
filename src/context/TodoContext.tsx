@@ -23,13 +23,8 @@ const initialTodos: TodoState = {
     },
   ],
   filterType: FilterType.ALL,
+  feedback: null,
 }
-
-// const initialState: TodoState = {
-//   todos: [],
-//   filteredTodos: null,
-//   filterType: null,
-// }
 
 const TodoContext = createContext<TodoState>(initialTodos)
 const TodoContextDispatch = createContext<Dispatch<Actions> | undefined>(undefined)

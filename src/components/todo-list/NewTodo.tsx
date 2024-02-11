@@ -14,11 +14,6 @@ const Container = styled.div`
   justify-content: space-between;
 `
 
-const ErrorText = styled.p`
-  color: red;
-  font-size: 0.875rem;
-`
-
 const NewTodo = () => {
   const dispatch = useTodoDispatch()
   const form = useRef<FormHandle>(null)
@@ -30,6 +25,16 @@ const NewTodo = () => {
 
     if (!title) {
       setIsError(true)
+      dispatch({
+        type: ETodoActionKind.DISPLAY_FEEDBACK,
+        payload: {
+          feedback: {
+            show: true,
+            text: 'Please fill the required field.',
+            type: 'error',
+          },
+        },
+      })
       input.current?.focus()
     } else {
       setIsError(false)
@@ -37,6 +42,17 @@ const NewTodo = () => {
         type: ETodoActionKind.ADD_TODO,
         payload: {
           title,
+        },
+      })
+
+      dispatch({
+        type: ETodoActionKind.DISPLAY_FEEDBACK,
+        payload: {
+          feedback: {
+            type: 'success',
+            text: 'Another task added on your list.',
+            show: true,
+          },
         },
       })
 
@@ -49,7 +65,6 @@ const NewTodo = () => {
       <Container>
         <FormControl>
           <Input type='text' name='title' id='title' $isError={isError} ref={input} />
-          {isError && <ErrorText>This is required.</ErrorText>}
         </FormControl>
         <Button $variant='outlined'>Add</Button>
       </Container>

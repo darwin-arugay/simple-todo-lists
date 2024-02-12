@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import List from '../List'
 import Tabs from '../../UI/Tabs'
-import { Button } from '../../UI/Button'
+// import { Button } from '../../UI/Button'
 import NewTodo from '../NewTodo'
 import { EmptyTaskMessage } from '../EmptyTaskMessage'
 import { Card } from '../../UI/Card'
@@ -67,7 +67,9 @@ const Todo = () => {
             )
           })}
         </Tabs>
-        <Button $variant='primary'>Clear All</Button>
+        {/* <Button $variant='primary' disabled>
+          Clear All
+        </Button> */}
       </ActionContainer>
       <Divider $my={1.2} />
       <>{filteredTodos.length ? <List todos={filteredTodos} /> : <EmptyTaskMessage />}</>

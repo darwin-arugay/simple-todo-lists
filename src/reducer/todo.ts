@@ -108,7 +108,6 @@ export const todoReducer = (state: TodoState, action: Actions) => {
     case ETodoActionKind.TOGGLE_COMPLETE: {
       const result = todos.map((todo) => {
         if (todo.id === payload.id) {
-          console.log('inside if', payload.id)
           return {
             ...todo,
             completed: !todo.completed,
@@ -116,9 +115,6 @@ export const todoReducer = (state: TodoState, action: Actions) => {
         }
         return todo
       })
-      console.group('Result')
-      console.table(result)
-      console.groupEnd()
       return {
         ...state,
         todos: result,
@@ -132,7 +128,6 @@ export const todoReducer = (state: TodoState, action: Actions) => {
       }
 
     case ETodoActionKind.DELETE_TODO:
-      console.log(payload.id)
       return {
         ...state,
         todos: todos.filter((todo) => todo.id !== payload.id),
@@ -154,7 +149,6 @@ export const todoReducer = (state: TodoState, action: Actions) => {
       }
 
     case ETodoActionKind.DISPLAY_FEEDBACK:
-      console.log(payload)
       return {
         ...state,
         feedback: payload.feedback,

@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 import { IoClose } from 'react-icons/io5'
 import { getIconBySeverity } from '../../../utils/getIconBySeverity'
 import { Severity } from '../../../shared/interfaces'
+import { IconButton } from '../IconButton'
 
 type AlertProps = {
   severity?: Severity
@@ -62,12 +63,6 @@ const Typography = styled.p`
   text-align: center;
 `
 
-const ActionContainer = styled.button`
-  background: transparent;
-  border: none;
-  cursor: pointer;
-`
-
 const Alert = ({ severity = 'info', text, show, onClose }: AlertProps) => {
   if (!show) return null
   const showCloseIcon = typeof onClose !== 'undefined'
@@ -81,9 +76,9 @@ const Alert = ({ severity = 'info', text, show, onClose }: AlertProps) => {
         <Typography>{text}</Typography>
       </LeftContainer>
       {showCloseIcon && (
-        <ActionContainer>
+        <IconButton>
           <StyledCloseIcon $severity={severity} onClick={onClose} />
-        </ActionContainer>
+        </IconButton>
       )}
     </StyledAlert>
   )

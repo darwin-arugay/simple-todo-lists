@@ -1,10 +1,13 @@
 import React, { useRef, useState } from 'react'
 import { styled } from 'styled-components'
-import { Button } from '../../UI/Button'
+import { IconButton } from '../../UI/IconButton'
 import { ETodoActionKind } from '../../../reducer/todo'
 import { useTodoDispatch } from '../../../context/TodoContext'
 import { Input } from '../../UI/Input'
 import Form, { FormHandle } from '../../UI/Form'
+import { IoClose, IoCheckmarkOutline } from 'react-icons/io5'
+import { BiSolidEditAlt } from 'react-icons/bi'
+import { MdOutlineDelete } from 'react-icons/md'
 
 type TodoItemProps = {
   id: number
@@ -12,11 +15,24 @@ type TodoItemProps = {
   title: string
 }
 
+const CancelIcon = styled(IoClose)`
+  color: var(--color-error-text);
+`
+const SaveIcon = styled(IoCheckmarkOutline)`
+  color: var(--color-success-text);
+`
+
+const EdiIcon = styled(BiSolidEditAlt)`
+  color: var(--color-primary-text);
+`
+
+const DeleteIcon = styled(MdOutlineDelete)`
+  color: var(--color-error-text);
+`
 const StyledTodoItem = styled.li`
   padding: 1rem 0;
   border-bottom: 1px solid #ccc;
   display: flex;
-  // justify-content: space-between;
   align-items: center;
 
   &:last-child {
@@ -33,7 +49,7 @@ const StyledTodoItemContainer = styled.label`
 
 const ActionContainer = styled.div`
   display: flex;
-  gap: 8px;
+  align-items: center;
 `
 
 const TodoTextItem = styled.span<{ $completed?: boolean }>`
@@ -153,31 +169,29 @@ const TodoItem = React.memo(({ id, completed, title }: TodoItemProps) => {
           />
 
           {isEditing ? (
-            <Input name='title' id='title' ref={inputRef} defaultValue={title} />
+            <Input name='title' id='title' ref={inputRef} defaultValue={title} $fullWidth />
           ) : (
             <TodoTextItem $completed={completed}>{title}</TodoTextItem>
           )}
         </StyledTodoItemContainer>
         <ActionContainer>
-          {!completed ? (
-            isEditing ? (
-              <>
-                <Button $variant='primary' type='submit'>
-                  Save
-                </Button>
-                <Button $variant='outlined' type='submit' onClick={handleEdit}>
-                  Cancel
-                </Button>
-              </>
-            ) : (
-              <Button $variant='outlined' disabled={completed} onClick={handleEdit} type='button'>
-                Edit
-              </Button>
-            )
+          {isEditing && !completed ? (
+            <>
+              <IconButton type='submit'>
+                <SaveIcon />
+              </IconButton>
+              <IconButton type='button' onClick={handleEdit}>
+                <CancelIcon />
+              </IconButton>
+            </>
+          ) : !completed ? (
+            <IconButton onClick={handleEdit} type='button'>
+              <EdiIcon />
+            </IconButton>
           ) : (
-            <Button onClick={deleteTodo} type='button'>
-              Delete
-            </Button>
+            <IconButton onClick={deleteTodo} type='button'>
+              <DeleteIcon />
+            </IconButton>
           )}
         </ActionContainer>
       </StyledTodoItem>
